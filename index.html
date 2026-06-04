@@ -374,6 +374,118 @@
       100% { transform: translateY(0); }
     }
 
+
+
+    .wheres-section {
+      max-width: 1180px;
+      margin: 0 auto 60px;
+      padding: 0 18px;
+      display: grid;
+      grid-template-columns: .85fr 1.15fr;
+      gap: 18px;
+      align-items: stretch;
+    }
+
+    .wheres-copy {
+      background: var(--panel);
+      color: var(--ink);
+      padding: clamp(22px, 4vw, 42px);
+      font-family: Arial, sans-serif;
+      font-weight: 900;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .wheres-copy h2 {
+      font-family: Impact, sans-serif;
+      font-size: clamp(2.2rem, 5vw, 5rem);
+      line-height: .9;
+      margin: 0 0 14px;
+      text-transform: uppercase;
+    }
+
+    .wheres-copy p { line-height: 1.55; margin: 0 0 16px; }
+
+    .wheres-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 6px 0 18px;
+    }
+
+    .wheres-tags span {
+      background: var(--gold);
+      color: var(--ink);
+      border: 3px solid var(--ink);
+      padding: 6px 9px;
+      box-shadow: 3px 3px 0 var(--ink);
+      text-transform: uppercase;
+      font-size: .78rem;
+    }
+
+    .wheres-preview {
+      background: #e9e9e9;
+      color: var(--ink);
+      padding: 14px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .wheres-preview:before {
+      content: "Level 01 • Queens";
+      position: absolute;
+      left: 24px;
+      top: 24px;
+      z-index: 2;
+      background: var(--red);
+      color: white;
+      border: 4px solid var(--ink);
+      box-shadow: 4px 4px 0 var(--ink);
+      padding: 8px 12px;
+      font-family: Arial, sans-serif;
+      font-weight: 1000;
+      text-transform: uppercase;
+      font-size: .82rem;
+    }
+
+    .wheres-preview img {
+      width: 100%;
+      height: 100%;
+      min-height: 520px;
+      max-height: 720px;
+      object-fit: cover;
+      object-position: center;
+      display: block;
+      border: 4px solid var(--ink);
+    }
+
+    .collection-strip {
+      max-width: 1180px;
+      margin: -42px auto 60px;
+      padding: 0 18px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+    }
+
+    .collection-card {
+      background: var(--panel);
+      color: var(--ink);
+      padding: 16px;
+      font-family: Arial, sans-serif;
+      font-weight: 900;
+      min-height: 110px;
+    }
+
+    .collection-card strong {
+      display: block;
+      font-family: Impact, sans-serif;
+      font-size: 1.7rem;
+      margin-bottom: 6px;
+      text-transform: uppercase;
+    }
+
     .feature-band {
       max-width: 1180px;
       margin: 0 auto 60px;
@@ -486,8 +598,122 @@
     @media (max-width: 950px) {
       .hero { grid-template-columns: 1fr; }
       .shop-grid { grid-template-columns: repeat(2, 1fr); }
-      .feature-band { grid-template-columns: 1fr; }
+  
+
+    .wheres-section {
+      max-width: 1180px;
+      margin: 0 auto 60px;
+      padding: 0 18px;
+      display: grid;
+      grid-template-columns: .85fr 1.15fr;
+      gap: 18px;
+      align-items: stretch;
+    }
+
+    .wheres-copy {
+      background: var(--panel);
+      color: var(--ink);
+      padding: clamp(22px, 4vw, 42px);
+      font-family: Arial, sans-serif;
+      font-weight: 900;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .wheres-copy h2 {
+      font-family: Impact, sans-serif;
+      font-size: clamp(2.2rem, 5vw, 5rem);
+      line-height: .9;
+      margin: 0 0 14px;
+      text-transform: uppercase;
+    }
+
+    .wheres-copy p { line-height: 1.55; margin: 0 0 16px; }
+
+    .wheres-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 6px 0 18px;
+    }
+
+    .wheres-tags span {
+      background: var(--gold);
+      color: var(--ink);
+      border: 3px solid var(--ink);
+      padding: 6px 9px;
+      box-shadow: 3px 3px 0 var(--ink);
+      text-transform: uppercase;
+      font-size: .78rem;
+    }
+
+    .wheres-preview {
+      background: #e9e9e9;
+      color: var(--ink);
+      padding: 14px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .wheres-preview:before {
+      content: "Level 01 • Queens";
+      position: absolute;
+      left: 24px;
+      top: 24px;
+      z-index: 2;
+      background: var(--red);
+      color: white;
+      border: 4px solid var(--ink);
+      box-shadow: 4px 4px 0 var(--ink);
+      padding: 8px 12px;
+      font-family: Arial, sans-serif;
+      font-weight: 1000;
+      text-transform: uppercase;
+      font-size: .82rem;
+    }
+
+    .wheres-preview img {
+      width: 100%;
+      height: 100%;
+      min-height: 520px;
+      max-height: 720px;
+      object-fit: cover;
+      object-position: center;
+      display: block;
+      border: 4px solid var(--ink);
+    }
+
+    .collection-strip {
+      max-width: 1180px;
+      margin: -42px auto 60px;
+      padding: 0 18px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+    }
+
+    .collection-card {
+      background: var(--panel);
+      color: var(--ink);
+      padding: 16px;
+      font-family: Arial, sans-serif;
+      font-weight: 900;
+      min-height: 110px;
+    }
+
+    .collection-card strong {
+      display: block;
+      font-family: Impact, sans-serif;
+      font-size: 1.7rem;
+      margin-bottom: 6px;
+      text-transform: uppercase;
+    }
+
+    .feature-band { grid-template-columns: 1fr; }
       .scanner-section { grid-template-columns: 1fr; }
+      .wheres-section { grid-template-columns: 1fr; }
+      .collection-strip { grid-template-columns: repeat(2, 1fr); }
     }
 
     @media (max-width: 620px) {
@@ -499,6 +725,8 @@
       .section-title { align-items:flex-start; flex-direction:column; }
       .cart-toggle { padding:8px 10px; }
       .scanner-float { right: 12px; bottom: 12px; padding: 10px 12px; font-size: .78rem; }
+      .collection-strip { grid-template-columns: 1fr; margin-top: -34px; }
+      .wheres-preview img { min-height: 420px; }
     }
   </style>
 </head>
@@ -511,6 +739,7 @@
         <a href="#drop">Drop</a>
         <a href="#about">Story</a>
         <a href="#scanner">Scanner</a>
+        <a href="#wheres-odot">Where's Odot</a>
         <a href="#contact">Contact</a>
       </div>
       <button class="cart-toggle" id="cartToggle">Cart <span id="cartCount">0</span></button>
@@ -581,6 +810,41 @@
           OdotNYC<br>Scan
         </div>
       </div>
+    </section>
+
+
+
+    <section class="section-title" id="wheres-odot">
+      <div>
+        <h2>Where's Odot?</h2>
+        <span>Find the OdotNYC sticker head across NYC.</span>
+      </div>
+    </section>
+
+    <section class="wheres-section">
+      <div class="wheres-copy pixel-border">
+        <span class="eyebrow">Hidden Object Collection</span>
+        <h2>Search the city. Find the head.</h2>
+        <p>Where's Odot is an interactive art collection inspired by classic hidden-object posters. Each city scene is packed with NYC energy, landmarks, food carts, trains, crowds, and one hidden OdotNYC sticker head.</p>
+        <p>Use this section to feature new borough levels, promote social media challenges, and turn each image into a collectible scan-and-find experience.</p>
+        <div class="wheres-tags">
+          <span>Queens</span><span>Brooklyn</span><span>SoHo</span><span>Bronx</span><span>Staten Island</span><span>Yonkers</span>
+        </div>
+        <div class="cta-row">
+          <a class="btn" href="wheres-odot-queens.png" target="_blank" rel="noopener">Open Queens Level</a>
+          <a class="btn secondary" href="#scanner">Scan Merch</a>
+        </div>
+      </div>
+      <div class="wheres-preview pixel-border" aria-label="Where's Odot Queens hidden object poster preview">
+        <img src="wheres-odot-queens.png" alt="Where's Odot Queens hidden object poster" />
+      </div>
+    </section>
+
+    <section class="collection-strip" aria-label="Where's Odot collection features">
+      <div class="collection-card pixel-border"><strong>10 Levels</strong>Build the collection with each image getting harder to solve.</div>
+      <div class="collection-card pixel-border"><strong>Boroughs</strong>Feature Queens, Brooklyn, Bronx, SoHo, Staten Island, Yonkers, and more.</div>
+      <div class="collection-card pixel-border"><strong>Challenges</strong>Invite visitors to screenshot, circle the head, and tag @OdotNYCTV.</div>
+      <div class="collection-card pixel-border"><strong>Collectible</strong>Connect each level to stickers, QR scans, merch, and unlockable media.</div>
     </section>
 
     <section class="feature-band" id="about">
