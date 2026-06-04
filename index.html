@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>OdotNYC Merch Store</title>
+  <style>
+    :root {
+      --bg: #111;
+      --panel: #f5f5f5;
+      --ink: #161616;
+      --red: #d8202a;
+      --blue: #1f4fa3;
+      --gold: #f7c843;
+      --gray: #d7d7d7;
+      --shadow: #050505;
+    }
+
+    * { box-sizing: border-box; }
+
+    html {
+      scroll-behavior: smooth;
+      cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='64' height='64' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='none'/%3E%3Cpath d='M22 4h12v24h4V14h10v24h4V24h8v24l-8 12H26L10 42V30h10l2 2V4z' fill='%23fff4d6'/%3E%3Cpath d='M22 4h12v24h4V14h10v24h4V24h8v24l-8 12H26L10 42V30h10l2 2V4z' fill='none' stroke='%23000' stroke-width='4' stroke-linejoin='round'/%3E%3Cpath d='M26 8h4v24h-4zM42 18h2v24h-2zM56 28h0v18l-6 10' stroke='%23d8202a' stroke-width='2'/%3E%3C/svg%3E") 18 8, pointer;
+    }
+
+    body {
+      margin: 0;
+      background:
+        linear-gradient(rgba(255,255,255,.035) 2px, transparent 2px),
+        linear-gradient(90deg, rgba(255,255,255,.035) 2px, transparent 2px),
+        radial-gradient(circle at top, #2a2a2a, #090909 62%);
+      background-size: 32px 32px, 32px 32px, auto;
+      color: var(--panel);
+      font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+      letter-spacing: .4px;
+      overflow-x: hidden;
+    }
+
+    a, button, .card, .cart-toggle { cursor: inherit; }
+
+    .pixel-border {
+      border: 4px solid var(--ink);
+      box-shadow: 8px 8px 0 var(--shadow);
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      background: #e9e9e9;
+      color: var(--ink);
+      border-bottom: 6px solid var(--ink);
+    }
+
+    .nav {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 14px 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: clamp(1.5rem, 3vw, 2.5rem);
+      text-transform: uppercase;
+    }
+
+    .logo-box {
+      width: 54px;
+      height: 54px;
+      background: var(--red);
+      color: white;
+      display: grid;
+      place-items: center;
+      border: 4px solid var(--ink);
+      box-shadow: 4px 4px 0 var(--ink);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 14px;
+      align-items: center;
+      font-family: Arial, sans-serif;
+      font-weight: 900;
+      text-transform: uppercase;
+      font-size: .8rem;
+    }
+
+    .nav-links a {
+      color: var(--ink);
+      text-decoration: none;
+      padding: 8px 10px;
+      border: 3px solid transparent;
+    }
+
+    .nav-links a:hover { border-color: var(--ink); background: var(--gold); }
+
+    .cart-toggle {
+      background: var(--red);
+      color: white;
+      border: 4px solid var(--ink);
+      padding: 10px 14px;
+      font-weight: 900;
+      box-shadow: 4px 4px 0 var(--ink);
+      text-transform: uppercase;
+    }
+
+    .hero {
+      max-width: 1180px;
+      margin: 34px auto;
+      padding: 18px;
+      display: grid;
+      grid-template-columns: 1.1fr .9fr;
+      gap: 24px;
+      align-items: center;
+    }
+
+    .hero-copy {
+      background: var(--panel);
+      color: var(--ink);
+      padding: clamp(22px, 5vw, 50px);
+    }
+
+    .eyebrow {
+      display: inline-block;
+      background: var(--blue);
+      color: white;
+      padding: 8px 12px;
+      border: 3px solid var(--ink);
+      box-shadow: 4px 4px 0 var(--ink);
+      font-size: .9rem;
+      margin-bottom: 14px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(2.7rem, 7vw, 6.4rem);
+      line-height: .9;
+      text-transform: uppercase;
+    }
+
+    .hero-copy p {
+      font-family: Arial, sans-serif;
+      font-weight: 800;
+      font-size: 1.05rem;
+      line-height: 1.55;
+      max-width: 650px;
+    }
+
+    .cta-row { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 20px; }
+
+    .btn {
+      background: var(--gold);
+      color: var(--ink);
+      border: 4px solid var(--ink);
+      padding: 13px 18px;
+      text-decoration: none;
+      display: inline-block;
+      font-family: Arial, sans-serif;
+      font-weight: 1000;
+      text-transform: uppercase;
+      box-shadow: 5px 5px 0 var(--ink);
+      transition: transform .12s, box-shadow .12s;
+    }
+
+    .btn:hover, button:hover { transform: translate(3px, 3px); box-shadow: 2px 2px 0 var(--ink); }
+    .btn.secondary { background: white; }
+
+    .game-box {
+      min-height: 420px;
+      background:
+        linear-gradient(#76b6ff 0 58%, #6fd36d 58% 72%, #b76b2a 72% 100%);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .sun { position:absolute; top:30px; right:35px; width:58px; height:58px; background:var(--gold); border:4px solid var(--ink); }
+    .cloud { position:absolute; width:145px; height:44px; background:white; border:4px solid var(--ink); top:70px; left:30px; box-shadow: 70px 48px 0 -8px white, 70px 48px 0 -4px var(--ink); }
+    .pipe { position:absolute; bottom:83px; right:48px; width:90px; height:130px; background:#22a94b; border:5px solid var(--ink); }
+    .pipe:before { content:""; position:absolute; left:-18px; top:-34px; width:126px; height:38px; background:#2fd65d; border:5px solid var(--ink); }
+    .block { position:absolute; width:58px; height:58px; background:var(--gold); border:5px solid var(--ink); display:grid; place-items:center; font-size:2rem; color:var(--ink); }
+    .b1 { top:170px; left:55px; } .b2 { top:170px; left:118px; background:#c76b2a; } .b3 { top:170px; left:181px; }
+    .player-card { position:absolute; left:38px; bottom:28px; right:38px; background:var(--panel); color:var(--ink); padding:16px; border:5px solid var(--ink); font-family:Arial,sans-serif; font-weight:900; }
+
+    .section-title {
+      max-width: 1180px;
+      margin: 40px auto 18px;
+      padding: 0 18px;
+      display: flex;
+      justify-content: space-between;
+      align-items: end;
+      gap: 16px;
+    }
+
+    .section-title h2 { margin:0; font-size: clamp(2rem, 4vw, 4rem); text-transform: uppercase; }
+    .section-title span { font-family: Arial, sans-serif; color: var(--gold); font-weight: 900; }
+
+    .shop-grid {
+      max-width: 1180px;
+      margin: 0 auto 60px;
+      padding: 0 18px;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 18px;
+    }
+
+    .card {
+      background: var(--panel);
+      color: var(--ink);
+      padding: 14px;
+      position: relative;
+      transition: transform .15s ease;
+    }
+
+    .card:hover { transform: translateY(-6px); }
+
+    .product-img {
+      aspect-ratio: 1 / 1;
+      border: 4px solid var(--ink);
+      background:
+        linear-gradient(45deg, rgba(0,0,0,.08) 25%, transparent 25% 50%, rgba(0,0,0,.08) 50% 75%, transparent 75%),
+        var(--gray);
+      background-size: 22px 22px;
+      display: grid;
+      place-items: center;
+      overflow: hidden;
+      margin-bottom: 12px;
+    }
+
+    .product-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      image-rendering: auto;
+    }
+
+    .shirt, .hoodie, .cap, .sticker, .tote, .poster, .mug, .patch {
+      width: 70%; height: 70%; position: relative; display:grid; place-items:center;
+      color:white; font-size:2.3rem; text-shadow: 3px 3px 0 #000;
+    }
+    .shirt { background: #111; clip-path: polygon(20% 15%, 34% 5%, 66% 5%, 80% 15%, 95% 36%, 78% 48%, 72% 34%, 72% 95%, 28% 95%, 28% 34%, 22% 48%, 5% 36%); }
+    .hoodie { background: var(--red); border-radius: 35% 35% 12% 12%; }
+    .hoodie:before { content:""; position:absolute; top:-18%; width:54%; height:42%; border-radius:50%; background:#b71922; border:4px solid #111; }
+    .cap { background: #111; height: 42%; border-radius: 45px 45px 16px 16px; }
+    .cap:after { content:""; position:absolute; right:-35%; bottom:0; width:46%; height:35%; background:#111; border-radius: 0 0 50px 0; }
+    .sticker { background: var(--gold); border-radius: 50%; border:6px solid #111; color:#111; }
+    .tote { background:#f5dfbd; color:#111; border:6px solid #111; }
+    .tote:before { content:""; position:absolute; top:-20%; width:50%; height:32%; border:5px solid #111; border-bottom:0; border-radius:30px 30px 0 0; }
+    .poster { background: var(--blue); border:6px solid #111; }
+    .mug { background:#fff; color:#111; border:6px solid #111; border-radius: 4px 4px 20px 20px; }
+    .mug:after { content:""; position:absolute; right:-25%; width:28%; height:36%; border:6px solid #111; border-left:0; border-radius:0 30px 30px 0; }
+    .patch { background: var(--red); border:6px solid #111; border-radius: 12px; }
+
+    .card h3 { margin: 5px 0 6px; font-size: 1.35rem; text-transform: uppercase; }
+    .card p { font-family: Arial, sans-serif; margin: 0 0 12px; line-height: 1.4; font-weight: 700; font-size: .9rem; }
+    .price-row { display:flex; align-items:center; justify-content:space-between; gap:10px; }
+    .price { font-size:1.5rem; color:var(--red); }
+    .add { background:var(--blue); color:white; border:4px solid var(--ink); padding:9px 10px; box-shadow:4px 4px 0 var(--ink); font-weight:1000; text-transform:uppercase; }
+
+    .feature-band {
+      max-width: 1180px;
+      margin: 0 auto 60px;
+      padding: 0 18px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    .feature {
+      background: #e9e9e9;
+      color: var(--ink);
+      padding: 22px;
+      font-family: Arial, sans-serif;
+      font-weight: 900;
+    }
+    .feature strong { display:block; font-family:Impact, sans-serif; font-size:1.7rem; margin-bottom:8px; }
+
+    .cart-drawer {
+      position: fixed;
+      top: 0;
+      right: -390px;
+      width: min(390px, 94vw);
+      height: 100vh;
+      background: var(--panel);
+      color: var(--ink);
+      border-left: 6px solid var(--ink);
+      z-index: 50;
+      padding: 20px;
+      transition: right .25s ease;
+      box-shadow: -8px 0 0 rgba(0,0,0,.4);
+      font-family: Arial, sans-serif;
+      font-weight: 900;
+    }
+
+    .cart-drawer.open { right: 0; }
+    .cart-head { display:flex; align-items:center; justify-content:space-between; gap:12px; }
+    .cart-head h2 { font-family:Impact,sans-serif; font-size:2.4rem; margin:0; }
+    .close { background:var(--red); color:white; border:4px solid var(--ink); font-size:1.2rem; padding:8px 12px; box-shadow:4px 4px 0 var(--ink); }
+    .cart-items { margin:22px 0; display:grid; gap:12px; }
+    .cart-item { display:flex; justify-content:space-between; gap:12px; border-bottom:3px solid #222; padding-bottom:10px; }
+    .checkout { width:100%; background:var(--gold); border:4px solid var(--ink); padding:14px; font-weight:1000; box-shadow:5px 5px 0 var(--ink); text-transform:uppercase; }
+
+
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,.72);
+      z-index: 80;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 18px;
+    }
+
+    .modal-backdrop.open { display: flex; }
+
+    .modal {
+      width: min(620px, 96vw);
+      max-height: 88vh;
+      overflow: auto;
+      background: var(--panel);
+      color: var(--ink);
+      padding: 24px;
+      font-family: Arial, sans-serif;
+      font-weight: 900;
+    }
+
+    .modal h2 {
+      font-family: Impact, sans-serif;
+      font-size: clamp(2rem, 6vw, 4rem);
+      line-height: .95;
+      margin: 0 0 12px;
+      text-transform: uppercase;
+    }
+
+    .modal p { line-height: 1.55; }
+
+    .modal-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 18px; }
+
+    .modal input, .modal textarea {
+      width: 100%;
+      border: 4px solid var(--ink);
+      padding: 12px;
+      margin: 8px 0 12px;
+      font-weight: 800;
+      font-family: Arial, sans-serif;
+    }
+
+    .modal textarea { min-height: 92px; resize: vertical; }
+
+    .notice {
+      background: #fff7ce;
+      border: 4px solid var(--ink);
+      padding: 12px;
+      margin-top: 10px;
+      font-size: .9rem;
+    }
+
+    footer {
+      background:#e9e9e9;
+      color:var(--ink);
+      border-top:6px solid var(--ink);
+      padding:24px 18px;
+      text-align:center;
+      font-family:Arial,sans-serif;
+      font-weight:900;
+    }
+
+    @media (max-width: 950px) {
+      .hero { grid-template-columns: 1fr; }
+      .shop-grid { grid-template-columns: repeat(2, 1fr); }
+      .feature-band { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 620px) {
+      .nav { align-items:flex-start; }
+      .nav-links { display:none; }
+      .hero { margin-top: 18px; }
+      .game-box { min-height: 330px; }
+      .shop-grid { grid-template-columns: 1fr; }
+      .section-title { align-items:flex-start; flex-direction:column; }
+      .cart-toggle { padding:8px 10px; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <nav class="nav">
+      <div class="brand"><span>OdotNYC.xyz</span></div>
+      <div class="nav-links">
+        <a href="#drop">Drop</a>
+        <a href="#about">Story</a>
+        <a href="#contact">Contact</a>
+      </div>
+      <button class="cart-toggle" id="cartToggle">Cart <span id="cartCount">0</span></button>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="hero-copy pixel-border">
+        <span class="eyebrow">OdotNYC.xyz</span>
+        <h1>Stay 1UP<br>with unique merch.</h1>
+        <p>OdotNYC provides retro game energy that meets NYC tech-merch. Each item can become an interactive collector piece through QR, NFC, AR, unlockable media, or digital storytelling.</p>
+        <div class="cta-row">
+          <a class="btn" href="#drop">Shop The Drop</a>
+          <button class="btn secondary" id="storyBtn" type="button">View Story</button>
+        </div>
+      </div>
+      <div class="game-box pixel-border" aria-label="NES style city scene">
+        <div class="sun"></div>
+        <div class="cloud"></div>
+        <div class="block b1">?</div><div class="block b2"></div><div class="block b3">O</div>
+        <div class="pipe"></div>
+        <div class="player-card">Follow OdotNYC on Instagram: @OdotNYCTV</div>
+      </div>
+    </section>
+
+    <section class="section-title" id="drop">
+      <div>
+        <h2>Current Drop</h2>
+        <span>Designed with a passion of Innovation! - OdotNYC</span>
+      </div>
+    </section>
+
+    <section class="shop-grid">
+      <article class="card pixel-border" data-name="OdotNYC Sticker Pack" data-price="12">
+        <div class="product-img"><img src="odotnycsticker.png" alt="OdotNYC Sticker Pack" /></div>
+        <h3>OdotNYC Sticker Pack</h3><p>Collectible OdotNYC stickers for laptops, water bottles, scooters, notebooks, and more.</p>
+        <div class="price-row"><span class="price">$5 Each</span><button class="add">Add</button></div>
+      </article>
+      <article class="card pixel-border" data-name="OdotNYC Tote Bag" data-price="35">
+        <div class="product-img"><img src="odotnyctote.png" alt="OdotNYC Tote Bag" /></div>
+        <h3>OdotNYC Tote Bag</h3><p>The durable OdotNYC tote bag featuring the signature artwork, built for daily city carry thorughout New York City.</p>
+        <div class="price-row"><span class="price">$30 Each</span><button class="add">Add</button></div>
+      </article>
+    </section>
+
+    <section class="feature-band" id="about">
+      <div class="feature pixel-border"><strong>Dream</strong>Where the goal is set. What do you dream to achieve? There is the starting point! </div>
+      <div class="feature pixel-border"><strong>BUILD</strong>Once you have the DREAM, it's now time to BUILD tools and culture that will allow you to achieve that DREAM. </div>
+      <div class="feature pixel-border"><strong>CREATE</strong>Now that the DREAM is BUILT, we move forth to CREATE habits to reasure we keep the DREAM ALIVE!!!!</div>
+    </section>
+  </main>
+
+  <aside class="cart-drawer" id="cartDrawer">
+    <div class="cart-head"><h2>Cart</h2><button class="close" id="closeCart">×</button></div>
+    <div class="cart-items" id="cartItems"><p>Your cart is empty.</p></div>
+    <h3>Total: <span id="cartTotal">$0</span></h3>
+    <button class="checkout" id="checkoutBtn">Checkout / Send IG Order</button>
+  </aside>
+
+
+  <div class="modal-backdrop" id="storyModal" aria-hidden="true">
+    <div class="modal pixel-border" role="dialog" aria-modal="true" aria-labelledby="storyTitle">
+      <h2 id="storyTitle">The OdotNYC Story</h2>
+      <p>OdotNYC merch is more than clothing. It is streetwear merged with technology, built by Odot himself as a way to connect design, culture, and interactivity.</p>
+      <p>Each product can become a collector item through hidden digital features like QR codes, NFC tags, AR pop-ups, unlockable videos, music, animations, behind-the-scenes stories, and limited product experiences.</p>
+      <p>The goal is simple: every piece should feel like something you wear, collect, scan, and experience.</p>
+      <div class="modal-actions">
+        <button class="btn" id="closeStory" type="button">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-backdrop" id="checkoutModal" aria-hidden="true">
+    <div class="modal pixel-border" role="dialog" aria-modal="true" aria-labelledby="checkoutTitle">
+      <h2 id="checkoutTitle">Send Order</h2>
+      <p>Add your info below. The order summary will be copied so you can paste it into Instagram DM.</p>
+      <label>Name</label>
+      <input id="customerName" placeholder="Your name" />
+      <label>Contact / Email</label>
+      <input id="customerContact" placeholder="Phone, email, or IG handle" />
+      <label>Size / Notes</label>
+      <textarea id="customerNotes" placeholder="Sizes, colors, delivery notes, etc."></textarea>
+      <div class="notice">A static website cannot automatically notify Instagram by itself. This button copies the order and opens your IG DM. For automatic IG notifications, connect this form to a backend, Zapier/Make, or Meta Instagram Messaging API.</div>
+      <div class="modal-actions">
+        <button class="btn" id="sendIgOrder" type="button">Copy + Open Instagram</button>
+        <button class="btn secondary" id="closeCheckout" type="button">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <footer id="contact">© <span id="year"></span> OdotNYC | Powered by: RoboTechi Co.</footer>
+
+  <script>
+    const cart = [];
+    const cartToggle = document.getElementById('cartToggle');
+    const cartDrawer = document.getElementById('cartDrawer');
+    const closeCart = document.getElementById('closeCart');
+    const cartItems = document.getElementById('cartItems');
+    const cartCount = document.getElementById('cartCount');
+    const cartTotal = document.getElementById('cartTotal');
+    const storyBtn = document.getElementById('storyBtn');
+    const storyModal = document.getElementById('storyModal');
+    const closeStory = document.getElementById('closeStory');
+    const checkoutBtn = document.getElementById('checkoutBtn');
+    const checkoutModal = document.getElementById('checkoutModal');
+    const closeCheckout = document.getElementById('closeCheckout');
+    const sendIgOrder = document.getElementById('sendIgOrder');
+    const IG_USERNAME = 'odot.rva';
+
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    cartToggle.addEventListener('click', () => cartDrawer.classList.add('open'));
+    closeCart.addEventListener('click', () => cartDrawer.classList.remove('open'));
+    storyBtn.addEventListener('click', () => storyModal.classList.add('open'));
+    closeStory.addEventListener('click', () => storyModal.classList.remove('open'));
+    checkoutBtn.addEventListener('click', () => {
+      if (!cart.length) { alert('Your cart is empty. Add an item first.'); return; }
+      checkoutModal.classList.add('open');
+    });
+    closeCheckout.addEventListener('click', () => checkoutModal.classList.remove('open'));
+
+    [storyModal, checkoutModal].forEach(modal => {
+      modal.addEventListener('click', event => {
+        if (event.target === modal) modal.classList.remove('open');
+      });
+    });
+
+    document.querySelectorAll('.add').forEach(button => {
+      button.addEventListener('click', event => {
+        const card = event.target.closest('.card');
+        cart.push({ name: card.dataset.name, price: Number(card.dataset.price) });
+        updateCart();
+        cartDrawer.classList.add('open');
+      });
+    });
+
+    function updateCart() {
+      cartCount.textContent = cart.length;
+      if (!cart.length) {
+        cartItems.innerHTML = '<p>Your cart is empty.</p>';
+        cartTotal.textContent = '$0';
+        return;
+      }
+      cartItems.innerHTML = cart.map(item => `
+        <div class="cart-item"><span>${item.name}</span><strong>$${item.price}</strong></div>
+      `).join('');
+      const total = cart.reduce((sum, item) => sum + item.price, 0);
+      cartTotal.textContent = `$${total}`;
+    }
+
+    function buildOrderMessage() {
+      const name = document.getElementById('customerName').value.trim() || 'Not provided';
+      const contact = document.getElementById('customerContact').value.trim() || 'Not provided';
+      const notes = document.getElementById('customerNotes').value.trim() || 'None';
+      const lines = cart.map((item, index) => `${index + 1}. ${item.name} - $${item.price}`).join('\n');
+      const total = cart.reduce((sum, item) => sum + item.price, 0);
+      return `ODOTNYC MERCH ORDER\n\nName: ${name}\nContact: ${contact}\n\nItems:\n${lines}\n\nTotal: $${total}\nNotes: ${notes}`;
+    }
+
+    sendIgOrder.addEventListener('click', async () => {
+      const message = buildOrderMessage();
+      try {
+        await navigator.clipboard.writeText(message);
+        alert('Order copied. Paste it into the Instagram DM that opens next.');
+      } catch (error) {
+        alert('Copy the order summary manually, then paste it into Instagram DM.');
+      }
+      window.open(`https://ig.me/m/${IG_USERNAME}`, '_blank');
+    });
+
+  </script>
+</body>
+</html>
