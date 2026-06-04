@@ -430,12 +430,12 @@
     </section>
 
     <section class="shop-grid">
-      <article class="card pixel-border" data-name="OdotNYC Sticker Pack" data-price="12">
+      <article class="card pixel-border" data-name="OdotNYC Sticker Pack" data-price="5">
         <div class="product-img"><img src="odotnycsticker.png" alt="OdotNYC Sticker Pack" /></div>
         <h3>OdotNYC Sticker Pack</h3><p>Collectible OdotNYC stickers for laptops, water bottles, scooters, notebooks, and more.</p>
         <div class="price-row"><span class="price">$5 Each</span><button class="add">Add</button></div>
       </article>
-      <article class="card pixel-border" data-name="OdotNYC Tote Bag" data-price="35">
+      <article class="card pixel-border" data-name="OdotNYC Tote Bag" data-price="30">
         <div class="product-img"><img src="odotnyctote.png" alt="OdotNYC Tote Bag" /></div>
         <h3>OdotNYC Tote Bag</h3><p>The durable OdotNYC tote bag featuring the signature artwork, built for daily city carry thorughout New York City.</p>
         <div class="price-row"><span class="price">$30 Each</span><button class="add">Add</button></div>
@@ -453,7 +453,7 @@
     <div class="cart-head"><h2>Cart</h2><button class="close" id="closeCart">×</button></div>
     <div class="cart-items" id="cartItems"><p>Your cart is empty.</p></div>
     <h3>Total: <span id="cartTotal">$0</span></h3>
-    <button class="checkout" id="checkoutBtn">Checkout / Send IG Order</button>
+    <button class="checkout" id="checkoutBtn">Checkout / Email Order</button>
   </aside>
 
 
@@ -471,17 +471,17 @@
 
   <div class="modal-backdrop" id="checkoutModal" aria-hidden="true">
     <div class="modal pixel-border" role="dialog" aria-modal="true" aria-labelledby="checkoutTitle">
-      <h2 id="checkoutTitle">Send Order</h2>
-      <p>Add your info below. The order summary will be copied so you can paste it into Instagram DM.</p>
+      <h2 id="checkoutTitle">Email Order</h2>
+      <p>Add your info below. When the order is ready to be processed, this will open an email with the full order summary filled in.</p>
       <label>Name</label>
       <input id="customerName" placeholder="Your name" />
       <label>Contact / Email</label>
       <input id="customerContact" placeholder="Phone, email, or IG handle" />
       <label>Size / Notes</label>
       <textarea id="customerNotes" placeholder="Sizes, colors, delivery notes, etc."></textarea>
-      <div class="notice">A static website cannot automatically notify Instagram by itself. This button copies the order and opens your IG DM. For automatic IG notifications, connect this form to a backend, Zapier/Make, or Meta Instagram Messaging API.</div>
+      <div class="notice">This static website uses your customer's email app to send the order. For fully automatic email sending without opening an email app, connect this form to a backend service such as Formspree, EmailJS, Netlify Forms, Zapier, Make, or a custom server.</div>
       <div class="modal-actions">
-        <button class="btn" id="sendIgOrder" type="button">Copy + Open Instagram</button>
+        <button class="btn" id="sendEmailOrder" type="button">Open Email Order</button>
         <button class="btn secondary" id="closeCheckout" type="button">Close</button>
       </div>
     </div>
@@ -503,8 +503,8 @@
     const checkoutBtn = document.getElementById('checkoutBtn');
     const checkoutModal = document.getElementById('checkoutModal');
     const closeCheckout = document.getElementById('closeCheckout');
-    const sendIgOrder = document.getElementById('sendIgOrder');
-    const IG_USERNAME = 'odot.rva';
+    const sendEmailOrder = document.getElementById('sendEmailOrder');
+    const ORDER_EMAIL = 'odot.rva@proton.me';
 
     document.getElementById('year').textContent = new Date().getFullYear();
 
@@ -556,15 +556,19 @@
       return `ODOTNYC MERCH ORDER\n\nName: ${name}\nContact: ${contact}\n\nItems:\n${lines}\n\nTotal: $${total}\nNotes: ${notes}`;
     }
 
-    sendIgOrder.addEventListener('click', async () => {
+    sendEmailOrder.addEventListener('click', async () => {
       const message = buildOrderMessage();
+      const subject = 'OdotNYC Merch Order Ready To Process';
+      const mailtoLink = `mailto:${ORDER_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(message)}`;
+
       try {
         await navigator.clipboard.writeText(message);
-        alert('Order copied. Paste it into the Instagram DM that opens next.');
       } catch (error) {
-        alert('Copy the order summary manually, then paste it into Instagram DM.');
+        console.warn('Clipboard copy unavailable:', error);
       }
-      window.open(`https://ig.me/m/${IG_USERNAME}`, '_blank');
+
+      window.location.href = mailtoLink;
+      alert('Your email app is opening with the order details. Review it, then press send.');
     });
 
   </script>
