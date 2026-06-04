@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>OdotNYC Merch Store</title>
+  <title>OdotNYC Digital Shop</title>
   <style>
     :root {
       --bg: #111;
@@ -171,6 +171,33 @@
     .btn:hover, button:hover { transform: translate(3px, 3px); box-shadow: 2px 2px 0 var(--ink); }
     .btn.secondary { background: white; }
 
+    .scanner-float {
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      z-index: 45;
+      background: var(--red);
+      color: white;
+      border: 4px solid var(--ink);
+      box-shadow: 6px 6px 0 var(--shadow);
+      padding: 13px 16px;
+      font-family: Arial, sans-serif;
+      font-weight: 1000;
+      text-transform: uppercase;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      animation: scannerPulse 1.8s infinite;
+    }
+
+    .scanner-float:hover { transform: translate(3px, 3px); box-shadow: 3px 3px 0 var(--shadow); }
+
+    @keyframes scannerPulse {
+      0%, 100% { filter: brightness(1); }
+      50% { filter: brightness(1.25); }
+    }
+
     .game-box {
       min-height: 420px;
       background:
@@ -262,6 +289,90 @@
     .price-row { display:flex; align-items:center; justify-content:space-between; gap:10px; }
     .price { font-size:1.5rem; color:var(--red); }
     .add { background:var(--blue); color:white; border:4px solid var(--ink); padding:9px 10px; box-shadow:4px 4px 0 var(--ink); font-weight:1000; text-transform:uppercase; }
+
+    .scanner-section {
+      max-width: 1180px;
+      margin: 0 auto 60px;
+      padding: 0 18px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+      align-items: stretch;
+    }
+
+    .scanner-copy {
+      background: var(--panel);
+      color: var(--ink);
+      padding: clamp(22px, 4vw, 42px);
+      font-family: Arial, sans-serif;
+      font-weight: 900;
+    }
+
+    .scanner-copy h2 {
+      font-family: Impact, sans-serif;
+      font-size: clamp(2.2rem, 5vw, 4.8rem);
+      line-height: .9;
+      margin: 0 0 14px;
+      text-transform: uppercase;
+    }
+
+    .scanner-copy p { line-height: 1.55; margin: 0 0 16px; }
+
+    .scanner-screen {
+      min-height: 360px;
+      background:
+        linear-gradient(rgba(255,255,255,.08) 2px, transparent 2px),
+        linear-gradient(90deg, rgba(255,255,255,.08) 2px, transparent 2px),
+        linear-gradient(135deg, #101010, #1f4fa3 55%, #d8202a);
+      background-size: 24px 24px, 24px 24px, auto;
+      position: relative;
+      overflow: hidden;
+      display: grid;
+      place-items: center;
+      padding: 24px;
+    }
+
+    .scan-frame {
+      width: min(310px, 82%);
+      aspect-ratio: 1 / 1;
+      border: 8px solid white;
+      box-shadow: 0 0 0 5px var(--ink), 8px 8px 0 var(--shadow);
+      position: relative;
+      display: grid;
+      place-items: center;
+      color: white;
+      text-align: center;
+      font-size: clamp(2.2rem, 6vw, 4rem);
+      line-height: .88;
+      text-transform: uppercase;
+      text-shadow: 4px 4px 0 var(--ink);
+    }
+
+    .scan-frame:before, .scan-frame:after {
+      content: "";
+      position: absolute;
+      left: 12%;
+      right: 12%;
+      height: 8px;
+      background: var(--gold);
+      border: 3px solid var(--ink);
+    }
+
+    .scan-frame:before { top: 18%; animation: scanLine 2.4s infinite linear; }
+    .scan-frame:after { bottom: 18%; opacity: .55; }
+
+    .scan-dots {
+      position: absolute;
+      inset: 16px;
+      border: 4px dashed var(--gold);
+      pointer-events: none;
+    }
+
+    @keyframes scanLine {
+      0% { transform: translateY(0); }
+      50% { transform: translateY(180px); }
+      100% { transform: translateY(0); }
+    }
 
     .feature-band {
       max-width: 1180px;
@@ -376,6 +487,7 @@
       .hero { grid-template-columns: 1fr; }
       .shop-grid { grid-template-columns: repeat(2, 1fr); }
       .feature-band { grid-template-columns: 1fr; }
+      .scanner-section { grid-template-columns: 1fr; }
     }
 
     @media (max-width: 620px) {
@@ -386,16 +498,19 @@
       .shop-grid { grid-template-columns: 1fr; }
       .section-title { align-items:flex-start; flex-direction:column; }
       .cart-toggle { padding:8px 10px; }
+      .scanner-float { right: 12px; bottom: 12px; padding: 10px 12px; font-size: .78rem; }
     }
   </style>
 </head>
 <body>
+  <a class="scanner-float" href="https://odotofrva.github.io/odotnycScan/" target="_blank" rel="noopener">▣ Scan Merch</a>
   <header>
     <nav class="nav">
       <div class="brand"><span>OdotNYC.xyz</span></div>
       <div class="nav-links">
         <a href="#drop">Drop</a>
         <a href="#about">Story</a>
+        <a href="#scanner">Scanner</a>
         <a href="#contact">Contact</a>
       </div>
       <button class="cart-toggle" id="cartToggle">Cart <span id="cartCount">0</span></button>
@@ -440,6 +555,32 @@
         <h3>OdotNYC Tote Bag</h3><p>The durable OdotNYC tote bag featuring the signature artwork, built for daily city carry thorughout New York City.</p>
         <div class="price-row"><span class="price">$30 Each</span><button class="add">Add</button></div>
       </article>
+    </section>
+
+    <section class="section-title" id="scanner">
+      <div>
+        <h2>OdotNYC Scanner</h2>
+        <span>Scan the merch. Unlock the experience.</span>
+      </div>
+    </section>
+
+    <section class="scanner-section">
+      <div class="scanner-copy pixel-border">
+        <span class="eyebrow">Interactive Collector Tech</span>
+        <h2>Tap into the digital layer.</h2>
+        <p>The OdotNYC scanner connects the physical merch drop with interactive content, product stories, AR-style unlocks, and collector experiences.</p>
+        <p>Use it to scan supported stickers, tote artwork, QR markers, and future OdotNYC pieces.</p>
+        <div class="cta-row">
+          <a class="btn" href="https://odotofrva.github.io/odotnycScan/" target="_blank" rel="noopener">Launch Scanner</a>
+          <a class="btn secondary" href="#drop">Back To Drop</a>
+        </div>
+      </div>
+      <div class="scanner-screen pixel-border" aria-label="OdotNYC scanner preview">
+        <div class="scan-frame">
+          <div class="scan-dots"></div>
+          OdotNYC<br>Scan
+        </div>
+      </div>
     </section>
 
     <section class="feature-band" id="about">
