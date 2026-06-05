@@ -1051,6 +1051,14 @@
         <h3>OdotNYC Tote Bag</h3><p>The durable OdotNYC tote bag featuring the signature artwork, built for daily city carry thorughout New York City.</p>
         <div class="price-row"><span class="price">$30 Each</span><button class="add">Add</button></div>
       </article>
+
+      <article class="card pixel-border" data-name="OdotNYC Game Cartridge" data-price="0">
+        <div class="product-img"><img src="odotnyc-game-cartridge.png" alt="OdotNYC Game Cartridge" /></div>
+        <h3>OdotNYC Game Cartridge</h3>
+        <p>Limited collector edition OdotNYC retro game cartridge. Story, features, unlockables, and future updates will be revealed through upcoming blog posts.</p>
+        <div class="price-row"><span class="price">Coming Soon</span><button class="add">Notify Me</button></div>
+      </article>
+
     </section>
 
     <section class="section-title" id="scanner">
@@ -1281,6 +1289,7 @@
     document.querySelectorAll('.add').forEach(button => {
       button.addEventListener('click', event => {
         const card = event.target.closest('.card');
+        if(card.dataset.price === "0"){ alert('Coming Soon! Follow the blog for release details on the OdotNYC Game Cartridge.'); return; }
         cart.push({ name: card.dataset.name, price: Number(card.dataset.price) });
         updateCart();
         cartDrawer.classList.add('open');
