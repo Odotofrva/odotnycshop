@@ -1606,7 +1606,7 @@
         </div>
       </div>
       <div class="hero-photo pixel-border" aria-label="OdotNYC hero photo">
-        <img src="1000005291.png" alt="OdotNYC founder holding coffee in OdotNYC hoodie" />
+        <img src="1000005291(1).png" alt="OdotNYC founder holding coffee in OdotNYC hoodie" />
         <div class="hero-badge">Follow OdotNYC: @OdotNYCTV</div>
       </div>
     </section>
@@ -1958,30 +1958,9 @@
       setTimeout(() => popup.remove(), 1750);
     }
 
-    function shakeScreen() {
-      document.body.classList.remove('screen-shake');
-      void document.body.offsetWidth;
-      document.body.classList.add('screen-shake');
-      setTimeout(() => document.body.classList.remove('screen-shake'), 380);
-    }
+    function shakeScreen() { return; }
 
-    document.addEventListener('pointerdown', event => {
-      const isInteractive = event.target.closest('a, button, input, textarea, select, label, .wheres-preview, .image-lightbox, .modal, .cart-drawer');
-
-      spawnTouchRing(event.clientX, event.clientY);
-
-      if (isInteractive) {
-        if (!event.target.closest('.image-lightbox')) spawnBubble(event.clientX, event.clientY);
-        const starTarget = event.target.closest('button, a, .btn, .wheres-card');
-        if (starTarget) spawnPixelStarsAround(starTarget, 7);
-        if (navigator.vibrate) navigator.vibrate(18);
-        return;
-      }
-
-      shakeScreen();
-      spawnBubble(event.clientX, event.clientY, 'BUMP!');
-      if (navigator.vibrate) navigator.vibrate([28, 18, 28]);
-    });
+    
 
     homeLoadingLink.addEventListener('click', event => {
       event.preventDefault();
