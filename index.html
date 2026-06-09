@@ -12,6 +12,7 @@
       --red: #d8202a;
       --blue: #1f4fa3;
       --gold: #f7c843;
+      --green: #25c45a;
       --gray: #d7d7d7;
       --shadow: #050505;
     }
@@ -171,16 +172,12 @@
     .btn:hover, button:hover { transform: translate(3px, 3px); box-shadow: 2px 2px 0 var(--ink); }
     .btn.secondary { background: white; }
 
-    .scanner-float {
-      position: fixed;
-      right: 18px;
-      bottom: 18px;
-      z-index: 45;
-      background: var(--red);
-      color: white;
+    .scan-nav-btn {
+      background: var(--green);
+      color: var(--ink);
       border: 4px solid var(--ink);
-      box-shadow: 6px 6px 0 var(--shadow);
-      padding: 13px 16px;
+      box-shadow: 4px 4px 0 var(--ink);
+      padding: 10px 12px;
       font-family: Arial, sans-serif;
       font-weight: 1000;
       text-transform: uppercase;
@@ -188,10 +185,11 @@
       display: inline-flex;
       align-items: center;
       gap: 8px;
+      white-space: nowrap;
       animation: scannerPulse 1.8s infinite;
     }
 
-    .scanner-float:hover { transform: translate(3px, 3px); box-shadow: 3px 3px 0 var(--shadow); }
+    .scan-nav-btn:hover { transform: translate(3px, 3px); box-shadow: 2px 2px 0 var(--ink); filter: brightness(1.08); }
 
     @keyframes scannerPulse {
       0%, 100% { filter: brightness(1); }
@@ -637,7 +635,7 @@
 
 
     /* Retro game micro-interactions */
-    .btn, .cart-toggle, .add, .close, .checkout, .wheres-card, .scanner-float {
+    .btn, .cart-toggle, .add, .close, .checkout, .wheres-card, .scan-nav-btn {
       position: relative;
       overflow: hidden;
       -webkit-tap-highlight-color: transparent;
@@ -767,6 +765,262 @@
       font-size: .78rem;
     }
 
+
+
+    body.screen-shake {
+      animation: screenShake .34s steps(2, end);
+    }
+
+    .loading-screen {
+      position: fixed;
+      inset: 0;
+      z-index: 2000;
+      display: none;
+      place-items: center;
+      background:
+        linear-gradient(rgba(247,200,67,.08) 2px, transparent 2px),
+        linear-gradient(90deg, rgba(247,200,67,.08) 2px, transparent 2px),
+        radial-gradient(circle at center, #1f4fa3 0, #111 62%);
+      background-size: 28px 28px, 28px 28px, auto;
+      color: var(--gold);
+      text-align: center;
+      font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+    }
+
+    .loading-screen.open { display: grid; }
+
+    .loading-box {
+      border: 6px solid var(--ink);
+      background: var(--red);
+      box-shadow: 10px 10px 0 var(--shadow);
+      padding: clamp(24px, 6vw, 62px);
+      animation: loadingPop .65s steps(3, end) infinite;
+    }
+
+    .loading-word {
+      display: block;
+      font-size: clamp(3.4rem, 13vw, 10rem);
+      line-height: .9;
+      color: var(--gold);
+      text-shadow: 5px 5px 0 var(--ink), 10px 10px 0 var(--blue);
+    }
+
+    .loading-dots {
+      display: block;
+      margin-top: 12px;
+      color: white;
+      font-family: Arial, sans-serif;
+      font-weight: 1000;
+      font-size: clamp(1rem, 3vw, 1.7rem);
+      animation: loadingDots .8s steps(2, end) infinite;
+    }
+
+    @keyframes screenShake {
+      0%, 100% { transform: translate(0, 0); }
+      12% { transform: translate(-8px, 4px) rotate(-.35deg); }
+      24% { transform: translate(7px, -5px) rotate(.35deg); }
+      36% { transform: translate(-6px, -3px) rotate(-.25deg); }
+      48% { transform: translate(8px, 5px) rotate(.25deg); }
+      60% { transform: translate(-5px, 3px); }
+      72% { transform: translate(5px, -3px); }
+      84% { transform: translate(-2px, 2px); }
+    }
+
+    @keyframes loadingPop {
+      0%, 100% { transform: scale(1) rotate(0deg); filter: brightness(1); }
+      50% { transform: scale(1.035) rotate(-.4deg); filter: brightness(1.15); }
+    }
+
+    @keyframes loadingDots {
+      0%, 40% { opacity: .35; }
+      41%, 100% { opacity: 1; }
+    }
+
+
+    .cart-hit-shake {
+      animation: cartHitShake .42s steps(2, end) both !important;
+      z-index: 3;
+    }
+
+    .cart-hit-shake .product-img {
+      animation: productFlash .42s steps(2, end) both;
+    }
+
+    .cart-flyer {
+      position: fixed;
+      z-index: 2500;
+      width: 58px;
+      height: 58px;
+      pointer-events: none;
+      border: 4px solid var(--ink);
+      box-shadow: 5px 5px 0 var(--shadow);
+      background: var(--gold);
+      color: var(--ink);
+      display: grid;
+      place-items: center;
+      font-family: Arial, sans-serif;
+      font-weight: 1000;
+      font-size: 1.35rem;
+      text-transform: uppercase;
+      overflow: hidden;
+      animation: cartFlySpin .62s steps(4, end) infinite;
+      transition: transform .78s cubic-bezier(.18,.92,.32,1.08), opacity .78s ease, width .78s ease, height .78s ease;
+      will-change: transform, opacity;
+    }
+
+    .cart-flyer img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .cart-catch-pop {
+      animation: cartCatchPop .36s steps(2, end) both !important;
+    }
+
+    @keyframes cartHitShake {
+      0%, 100% { transform: translate(0,0) rotate(0deg); }
+      10% { transform: translate(-8px, 3px) rotate(-1.2deg); }
+      20% { transform: translate(8px, -3px) rotate(1.2deg); }
+      30% { transform: translate(-7px, -2px) rotate(-1deg); }
+      40% { transform: translate(7px, 2px) rotate(1deg); }
+      50% { transform: translate(-5px, 2px) rotate(-.8deg); }
+      60% { transform: translate(5px, -2px) rotate(.8deg); }
+      70% { transform: translate(-3px, 1px) rotate(-.5deg); }
+      80% { transform: translate(3px, -1px) rotate(.5deg); }
+    }
+
+    @keyframes productFlash {
+      0%, 100% { filter: brightness(1); }
+      25%, 75% { filter: brightness(1.38) contrast(1.08); }
+      50% { filter: brightness(.9) contrast(1.18); }
+    }
+
+    @keyframes cartFlySpin {
+      0%, 100% { rotate: 0deg; }
+      25% { rotate: -8deg; }
+      50% { rotate: 8deg; }
+      75% { rotate: -4deg; }
+    }
+
+    @keyframes cartCatchPop {
+      0%, 100% { transform: scale(1); filter: brightness(1); }
+      35% { transform: scale(1.18) rotate(-2deg); filter: brightness(1.35); }
+      70% { transform: scale(.95) rotate(1deg); }
+    }
+
+
+    .screen-flash {
+      position: fixed;
+      inset: 0;
+      z-index: 2400;
+      pointer-events: none;
+      background: rgba(247, 200, 67, .38);
+      opacity: 0;
+    }
+
+    .screen-flash.show {
+      animation: screenFlash .32s steps(2, end) both;
+    }
+
+    .pixel-star {
+      position: fixed;
+      z-index: 2600;
+      width: 12px;
+      height: 12px;
+      pointer-events: none;
+      background: var(--gold);
+      border: 2px solid var(--ink);
+      box-shadow: 2px 2px 0 var(--shadow);
+      clip-path: polygon(50% 0%, 62% 34%, 98% 35%, 68% 55%, 80% 91%, 50% 70%, 20% 91%, 32% 55%, 2% 35%, 38% 34%);
+      animation: pixelStarFly .75s steps(4, end) forwards;
+    }
+
+    .cart-sparkle {
+      position: fixed;
+      z-index: 2600;
+      width: 10px;
+      height: 10px;
+      pointer-events: none;
+      background: white;
+      border: 2px solid var(--ink);
+      box-shadow: 0 0 0 2px var(--gold), 3px 3px 0 var(--shadow);
+      animation: sparklePop .7s steps(4, end) forwards;
+    }
+
+    .level-up-popup {
+      position: fixed;
+      left: 50%;
+      top: 26%;
+      z-index: 2700;
+      transform: translate(-50%, -50%) scale(.8);
+      pointer-events: none;
+      background: var(--red);
+      color: var(--gold);
+      border: 6px solid var(--ink);
+      box-shadow: 10px 10px 0 var(--shadow);
+      padding: clamp(16px, 4vw, 30px) clamp(18px, 5vw, 42px);
+      font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+      width: min(760px, calc(100vw - 32px));
+      font-size: clamp(2rem, 7vw, 5.4rem);
+      line-height: .85;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      text-shadow: 4px 4px 0 var(--ink), 8px 8px 0 var(--blue);
+      animation: levelUpPop 1.45s steps(4, end) forwards;
+      text-align: center;
+    }
+
+    .level-up-popup small {
+      display: block;
+      margin-top: 10px;
+      color: white;
+      font-family: Arial, sans-serif;
+      font-size: clamp(.8rem, 2.2vw, 1.2rem);
+      letter-spacing: 1px;
+      text-shadow: 2px 2px 0 var(--ink);
+    }
+
+    .cart-toggle.cart-bounce {
+      animation: cartBounce .58s steps(4, end) both !important;
+    }
+
+    @keyframes screenFlash {
+      0% { opacity: 0; }
+      18% { opacity: 1; }
+      100% { opacity: 0; }
+    }
+
+    @keyframes pixelStarFly {
+      0% { opacity: 0; transform: translate(0, 0) scale(.45) rotate(0deg); }
+      18% { opacity: 1; }
+      100% { opacity: 0; transform: translate(var(--star-x), var(--star-y)) scale(1.35) rotate(180deg); }
+    }
+
+    @keyframes sparklePop {
+      0% { opacity: 0; transform: translate(0,0) scale(.4) rotate(0deg); }
+      15% { opacity: 1; }
+      100% { opacity: 0; transform: translate(var(--spark-x), var(--spark-y)) scale(1.8) rotate(180deg); }
+    }
+
+    @keyframes levelUpPop {
+      0% { opacity: 0; transform: translate(-50%, -50%) scale(.55) rotate(-3deg); }
+      18% { opacity: 1; transform: translate(-50%, -50%) scale(1.08) rotate(2deg); }
+      72% { opacity: 1; transform: translate(-50%, -50%) scale(1) rotate(0); }
+      100% { opacity: 0; transform: translate(-50%, -74%) scale(.9) rotate(-1deg); }
+    }
+
+    @keyframes cartBounce {
+      0%, 100% { transform: translateY(0) scale(1); }
+      18% { transform: translateY(-14px) scale(1.08); }
+      34% { transform: translateY(0) scale(.96); }
+      52% { transform: translateY(-8px) scale(1.05); }
+      70% { transform: translateY(0) scale(1); }
+    }
+
     @media (prefers-reduced-motion: reduce) {
       *, *::before, *::after { animation-duration: .001ms !important; animation-iteration-count: 1 !important; scroll-behavior: auto !important; }
     }
@@ -811,7 +1065,70 @@
     .cart-head h2 { font-family:Impact,sans-serif; font-size:2.4rem; margin:0; }
     .close { background:var(--red); color:white; border:4px solid var(--ink); font-size:1.2rem; padding:8px 12px; box-shadow:4px 4px 0 var(--ink); }
     .cart-items { margin:22px 0; display:grid; gap:12px; }
-    .cart-item { display:flex; justify-content:space-between; gap:12px; border-bottom:3px solid #222; padding-bottom:10px; }
+    .cart-item {
+      display:grid;
+      grid-template-columns: 1fr auto auto;
+      align-items:center;
+      gap:10px;
+      border-bottom:3px solid #222;
+      padding-bottom:10px;
+    }
+    .cart-item span { line-height: 1.25; }
+    .remove-item {
+      background: var(--red);
+      color: white;
+      border: 3px solid var(--ink);
+      box-shadow: 3px 3px 0 var(--ink);
+      padding: 6px 8px;
+      font-size: .72rem;
+      font-weight: 1000;
+      text-transform: uppercase;
+    }
+    .remove-item:hover { transform: translate(2px, 2px); box-shadow: 1px 1px 0 var(--ink); }
+
+    .cart-status-bubble {
+      position: fixed;
+      left: auto;
+      top: auto;
+      z-index: 70;
+      width: max-content;
+      max-width: min(280px, calc(100vw - 24px));
+      background: var(--gold);
+      color: var(--ink);
+      border: 4px solid var(--ink);
+      box-shadow: 6px 6px 0 var(--shadow);
+      padding: 12px 14px;
+      font-family: Arial, sans-serif;
+      font-weight: 1000;
+      text-transform: uppercase;
+      pointer-events: none;
+      opacity: 0;
+      transform: translateY(14px) scale(.92);
+    }
+
+    .cart-status-bubble.show {
+      animation: statusBubblePop 1.35s steps(3, end) both;
+    }
+
+    .cart-status-bubble:after {
+      content: "";
+      position: absolute;
+      left: var(--bubble-arrow-left, 50%);
+      top: -15px;
+      width: 22px;
+      height: 22px;
+      background: var(--gold);
+      border-left: 4px solid var(--ink);
+      border-top: 4px solid var(--ink);
+      transform: translateX(-50%) rotate(45deg);
+    }
+
+    @keyframes statusBubblePop {
+      0% { opacity: 0; transform: translateY(16px) scale(.85) rotate(-1deg); }
+      12% { opacity: 1; transform: translateY(0) scale(1.06) rotate(1deg); }
+      72% { opacity: 1; transform: translateY(0) scale(1) rotate(0deg); }
+      100% { opacity: 0; transform: translateY(-10px) scale(.94) rotate(-1deg); }
+    }
     .checkout { width:100%; background:var(--gold); border:4px solid var(--ink); padding:14px; font-weight:1000; box-shadow:5px 5px 0 var(--ink); text-transform:uppercase; }
 
 
@@ -1121,7 +1438,8 @@
     }
 
     @media (max-width: 620px) {
-      .nav { align-items:flex-start; }
+      .nav { align-items:flex-start; flex-wrap: wrap; }
+      .brand { width: 100%; }
       .nav-links { display:none; }
       .hero { margin-top: 18px; }
       .game-box { min-height: 330px; }
@@ -1129,7 +1447,8 @@
       .shop-grid { grid-template-columns: 1fr; }
       .section-title { align-items:flex-start; flex-direction:column; }
       .cart-toggle { padding:8px 10px; }
-      .scanner-float { right: 12px; bottom: 12px; padding: 10px 12px; font-size: .78rem; }
+      .scan-nav-btn { padding: 8px 9px; font-size: .72rem; }
+      .cart-status-bubble { font-size: .78rem; max-width: min(250px, calc(100vw - 24px)); }
       .collection-strip { grid-template-columns: 1fr; margin-top: -34px; }
       .wheres-preview img { min-height: 420px; }
       .wheres-gallery { grid-template-columns: 1fr; }
@@ -1154,7 +1473,8 @@
   </style>
 </head>
 <body>
-  <a class="scanner-float" href="https://odotofrva.github.io/odotnycScan/" target="_blank" rel="noopener">▣ Scan Merch</a>
+  <div class="cart-status-bubble" id="cartStatusBubble" aria-live="polite">Cart is empty. Grab a drop!</div>
+  <div class="screen-flash" id="screenFlash" aria-hidden="true"></div>
   <header>
     <nav class="nav">
       <div class="brand"><span>OdotNYC.xyz</span></div>
@@ -1164,8 +1484,9 @@
         <a href="#scanner">Scanner</a>
         <a href="#wheres-odot">Where's OdotNYC</a>
         <a href="#contact">Contact</a>
-        <a href="https://www.odotnyc.xyz" style="background:#f7c843;color:#111;border:3px solid #111;box-shadow:3px 3px 0 #111;padding:8px 12px;font-weight:1000;">HOME</a>
+        <a id="homeLoadingLink" href="https://www.odotnyc.xyz" style="background:#f7c843;color:#111;border:3px solid #111;box-shadow:3px 3px 0 #111;padding:8px 12px;font-weight:1000;">HOME</a>
       </div>
+      <a class="scan-nav-btn" href="https://odotofrva.github.io/odotnycScan/" target="_blank" rel="noopener">▣ Scan Merch</a>
       <button class="cart-toggle" id="cartToggle">Cart <span id="cartCount">0</span></button>
     </nav>
   </header>
@@ -1327,6 +1648,15 @@
     </div>
   </div>
 
+
+
+  <div class="loading-screen" id="loadingScreen" aria-hidden="true">
+    <div class="loading-box" role="status" aria-live="polite">
+      <span class="loading-word">LOADING</span>
+      <span class="loading-dots">Entering OdotNYC...</span>
+    </div>
+  </div>
+
   <div class="modal-backdrop" id="storyModal" aria-hidden="true">
     <div class="modal pixel-border" role="dialog" aria-modal="true" aria-labelledby="storyTitle">
       <h2 id="storyTitle">The OdotNYC Story</h2>
@@ -1367,6 +1697,9 @@
     const cartItems = document.getElementById('cartItems');
     const cartCount = document.getElementById('cartCount');
     const cartTotal = document.getElementById('cartTotal');
+    const cartStatusBubble = document.getElementById('cartStatusBubble');
+    const screenFlash = document.getElementById('screenFlash');
+    const levelMilestonesShown = new Set();
     const storyBtn = document.getElementById('storyBtn');
     const storyModal = document.getElementById('storyModal');
     const closeStory = document.getElementById('closeStory');
@@ -1388,6 +1721,8 @@
     const zoomInWheres = document.getElementById('zoomInWheres');
     const zoomOutWheres = document.getElementById('zoomOutWheres');
     const resetZoomWheres = document.getElementById('resetZoomWheres');
+    const homeLoadingLink = document.getElementById('homeLoadingLink');
+    const loadingScreen = document.getElementById('loadingScreen');
     let wheresZoom = 1;
 
     document.getElementById('year').textContent = new Date().getFullYear();
@@ -1413,12 +1748,138 @@
       setTimeout(() => ring.remove(), 520);
     }
 
+    function playCoinSound() {
+      try {
+        const AudioContext = window.AudioContext || window.webkitAudioContext;
+        if (!AudioContext) return;
+        const ctx = new AudioContext();
+        const gain = ctx.createGain();
+        gain.gain.setValueAtTime(0.0001, ctx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.18, ctx.currentTime + 0.01);
+        gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 0.28);
+        gain.connect(ctx.destination);
+
+        [880, 1320, 1760].forEach((frequency, index) => {
+          const osc = ctx.createOscillator();
+          osc.type = 'square';
+          osc.frequency.setValueAtTime(frequency, ctx.currentTime + index * 0.055);
+          osc.connect(gain);
+          osc.start(ctx.currentTime + index * 0.055);
+          osc.stop(ctx.currentTime + 0.13 + index * 0.055);
+        });
+
+        setTimeout(() => ctx.close(), 420);
+      } catch (error) {
+        console.warn('Coin sound unavailable:', error);
+      }
+    }
+
+    function flashScreen() {
+      screenFlash.classList.remove('show');
+      void screenFlash.offsetWidth;
+      screenFlash.classList.add('show');
+      setTimeout(() => screenFlash.classList.remove('show'), 360);
+    }
+
+    function spawnPixelStarsAround(element, amount = 8) {
+      const rect = element.getBoundingClientRect();
+      const centerX = rect.left + rect.width / 2;
+      const centerY = rect.top + rect.height / 2;
+      for (let i = 0; i < amount; i += 1) {
+        const star = document.createElement('span');
+        star.className = 'pixel-star';
+        const angle = (Math.PI * 2 * i) / amount;
+        const distance = 34 + Math.random() * 34;
+        star.style.left = `${centerX}px`;
+        star.style.top = `${centerY}px`;
+        star.style.setProperty('--star-x', `${Math.cos(angle) * distance}px`);
+        star.style.setProperty('--star-y', `${Math.sin(angle) * distance}px`);
+        document.body.appendChild(star);
+        setTimeout(() => star.remove(), 820);
+      }
+    }
+
+    function spawnSparkles(x, y, amount = 12) {
+      for (let i = 0; i < amount; i += 1) {
+        const sparkle = document.createElement('span');
+        sparkle.className = 'cart-sparkle';
+        const angle = (Math.PI * 2 * i) / amount;
+        const distance = 28 + Math.random() * 42;
+        sparkle.style.left = `${x}px`;
+        sparkle.style.top = `${y}px`;
+        sparkle.style.setProperty('--spark-x', `${Math.cos(angle) * distance}px`);
+        sparkle.style.setProperty('--spark-y', `${Math.sin(angle) * distance}px`);
+        document.body.appendChild(sparkle);
+        setTimeout(() => sparkle.remove(), 760);
+      }
+    }
+
+    function bounceCartButton() {
+      cartToggle.classList.remove('cart-bounce');
+      void cartToggle.offsetWidth;
+      cartToggle.classList.add('cart-bounce');
+      setTimeout(() => cartToggle.classList.remove('cart-bounce'), 640);
+    }
+
+    const achievementMilestones = {
+      1: '🏆 FIRST ITEM FOUND',
+      3: '🏆 STICKER MASTER',
+      5: '🏆 COFFEE COLLECTOR',
+      7: '🏆 NYC EXPLORER',
+      10: '🏆 MERCH HUNTER'
+    };
+
+    function showLevelUp(count) {
+      const achievement = achievementMilestones[count];
+      if (!achievement || levelMilestonesShown.has(count)) return;
+      levelMilestonesShown.add(count);
+      const popup = document.createElement('div');
+      popup.className = 'level-up-popup';
+      popup.innerHTML = `${achievement}<small>${count} ITEM${count === 1 ? '' : 'S'} COLLECTED</small>`;
+      document.body.appendChild(popup);
+      playCoinSound();
+      flashScreen();
+      spawnSparkles(window.innerWidth / 2, window.innerHeight * .26, 22);
+      showCartStatusBubble(achievement);
+      if (navigator.vibrate) navigator.vibrate([45, 35, 45, 35, 80]);
+      setTimeout(() => popup.remove(), 1750);
+    }
+
+    function shakeScreen() {
+      document.body.classList.remove('screen-shake');
+      void document.body.offsetWidth;
+      document.body.classList.add('screen-shake');
+      setTimeout(() => document.body.classList.remove('screen-shake'), 380);
+    }
+
     document.addEventListener('pointerdown', event => {
-      const interactive = event.target.closest('a, button, .wheres-preview, .card');
-      if (!interactive) return;
+      const isInteractive = event.target.closest('a, button, input, textarea, select, label, .wheres-preview, .image-lightbox, .modal, .cart-drawer');
+
       spawnTouchRing(event.clientX, event.clientY);
-      if (!event.target.closest('.image-lightbox')) spawnBubble(event.clientX, event.clientY);
-      if (navigator.vibrate) navigator.vibrate(18);
+
+      if (isInteractive) {
+        if (!event.target.closest('.image-lightbox')) spawnBubble(event.clientX, event.clientY);
+        const starTarget = event.target.closest('button, a, .btn, .wheres-card');
+        if (starTarget) spawnPixelStarsAround(starTarget, 7);
+        if (navigator.vibrate) navigator.vibrate(18);
+        return;
+      }
+
+      shakeScreen();
+      spawnBubble(event.clientX, event.clientY, 'BUMP!');
+      if (navigator.vibrate) navigator.vibrate([28, 18, 28]);
+    });
+
+    homeLoadingLink.addEventListener('click', event => {
+      event.preventDefault();
+      const destination = homeLoadingLink.href;
+      loadingScreen.classList.add('open');
+      loadingScreen.setAttribute('aria-hidden', 'false');
+      spawnBubble(window.innerWidth / 2, window.innerHeight * .28, 'WARP!');
+      if (navigator.vibrate) navigator.vibrate([45, 30, 45]);
+      setTimeout(() => {
+        window.location.href = destination;
+      }, 950);
     });
 
 
@@ -1505,13 +1966,117 @@
       });
     });
 
+    function animateProductToCart(card, button) {
+      const productImg = card.querySelector('.product-img img');
+      const startBox = (productImg || card).getBoundingClientRect();
+      const cartBox = cartToggle.getBoundingClientRect();
+      const flyer = document.createElement('div');
+      flyer.className = 'cart-flyer';
+
+      if (productImg) {
+        const img = document.createElement('img');
+        img.src = productImg.src;
+        img.alt = '';
+        flyer.appendChild(img);
+      } else {
+        flyer.textContent = '1UP';
+      }
+
+      flyer.style.left = `${startBox.left + startBox.width / 2 - 29}px`;
+      flyer.style.top = `${startBox.top + startBox.height / 2 - 29}px`;
+      document.body.appendChild(flyer);
+
+      card.classList.remove('cart-hit-shake');
+      void card.offsetWidth;
+      card.classList.add('cart-hit-shake');
+      if (navigator.vibrate) navigator.vibrate([18, 18, 18, 18, 36]);
+      spawnBubble(startBox.left + startBox.width / 2, startBox.top + 22, 'ADDED!');
+
+      requestAnimationFrame(() => {
+        const moveX = cartBox.left + cartBox.width / 2 - (startBox.left + startBox.width / 2);
+        const moveY = cartBox.top + cartBox.height / 2 - (startBox.top + startBox.height / 2);
+        flyer.style.transform = `translate(${moveX}px, ${moveY}px) scale(.32)`;
+        flyer.style.opacity = '0.25';
+        flyer.style.width = '42px';
+        flyer.style.height = '42px';
+      });
+
+      setTimeout(() => {
+        flyer.remove();
+        cartToggle.classList.remove('cart-catch-pop');
+        void cartToggle.offsetWidth;
+        cartToggle.classList.add('cart-catch-pop');
+        bounceCartButton();
+        spawnSparkles(cartBox.left + cartBox.width / 2, cartBox.top + cartBox.height / 2, 14);
+        spawnBubble(cartBox.left + cartBox.width / 2, cartBox.bottom + 12, 'CART +1');
+      }, 790);
+
+      setTimeout(() => card.classList.remove('cart-hit-shake'), 470);
+    }
+
+    function getCartStatusMessage() {
+      if (!cart.length) return 'Cart is empty. Grab a drop!';
+      const total = cart.reduce((sum, item) => sum + item.price, 0);
+      const itemWord = cart.length === 1 ? 'item' : 'items';
+      const latest = cart[cart.length - 1]?.name || 'OdotNYC item';
+      const messages = [
+        `Cart status: ${cart.length} ${itemWord} loaded • $${total}`,
+        `Current cart: ${cart.length} ${itemWord} • Total $${total}`,
+        `${latest} is in the bag! Cart: ${cart.length} ${itemWord}`,
+        `Ready player? Cart has ${cart.length} ${itemWord}.`
+      ];
+      return messages[Math.floor(Date.now() / 15000) % messages.length];
+    }
+
+    function positionCartStatusBubble() {
+      if (!cartStatusBubble || !cartToggle) return;
+
+      const gap = 14;
+      const cartRect = cartToggle.getBoundingClientRect();
+      cartStatusBubble.style.visibility = 'hidden';
+      cartStatusBubble.classList.remove('show');
+      cartStatusBubble.style.left = '0px';
+      cartStatusBubble.style.top = '0px';
+      const bubbleRect = cartStatusBubble.getBoundingClientRect();
+      const viewportPadding = 12;
+      const idealLeft = cartRect.left + (cartRect.width / 2) - (bubbleRect.width / 2);
+      const left = Math.max(viewportPadding, Math.min(idealLeft, window.innerWidth - bubbleRect.width - viewportPadding));
+      const top = cartRect.bottom + gap;
+      const arrowLeft = cartRect.left + (cartRect.width / 2) - left;
+
+      cartStatusBubble.style.left = `${left}px`;
+      cartStatusBubble.style.top = `${top}px`;
+      cartStatusBubble.style.setProperty('--bubble-arrow-left', `${arrowLeft}px`);
+      cartStatusBubble.style.visibility = '';
+    }
+
+    function showCartStatusBubble(message) {
+      cartStatusBubble.textContent = message || getCartStatusMessage();
+      positionCartStatusBubble();
+      cartStatusBubble.classList.remove('show');
+      void cartStatusBubble.offsetWidth;
+      cartStatusBubble.classList.add('show');
+    }
+
+    window.addEventListener('resize', positionCartStatusBubble);
+    window.addEventListener('scroll', positionCartStatusBubble, { passive: true });
+
+    setInterval(() => showCartStatusBubble(), 15000);
+    setTimeout(() => showCartStatusBubble(), 900);
+
     document.querySelectorAll('.add').forEach(button => {
       button.addEventListener('click', event => {
         const card = event.target.closest('.card');
         if(card.dataset.price === "0"){ alert('Coming Soon! Follow the blog for release details on the OdotNYC Game Cartridge.'); return; }
+        playCoinSound();
+        flashScreen();
+        spawnPixelStarsAround(button, 10);
+        if (navigator.vibrate) navigator.vibrate([35, 25, 55]);
+        animateProductToCart(card, button);
         cart.push({ name: card.dataset.name, price: Number(card.dataset.price) });
         updateCart();
-        cartDrawer.classList.add('open');
+        showLevelUp(cart.length);
+        setTimeout(() => cartDrawer.classList.add('open'), 680);
       });
     });
 
@@ -1520,14 +2085,32 @@
       if (!cart.length) {
         cartItems.innerHTML = '<p>Your cart is empty.</p>';
         cartTotal.textContent = '$0';
+        showCartStatusBubble('Cart cleared. Ready for a new drop!');
         return;
       }
-      cartItems.innerHTML = cart.map(item => `
-        <div class="cart-item"><span>${item.name}</span><strong>$${item.price}</strong></div>
+      cartItems.innerHTML = cart.map((item, index) => `
+        <div class="cart-item">
+          <span>${item.name}</span>
+          <strong>$${item.price}</strong>
+          <button class="remove-item" type="button" data-index="${index}" aria-label="Remove ${item.name} from cart">Remove</button>
+        </div>
       `).join('');
       const total = cart.reduce((sum, item) => sum + item.price, 0);
       cartTotal.textContent = `$${total}`;
+      showCartStatusBubble();
     }
+
+    cartItems.addEventListener('click', event => {
+      const removeButton = event.target.closest('.remove-item');
+      if (!removeButton) return;
+      const index = Number(removeButton.dataset.index);
+      if (Number.isNaN(index) || !cart[index]) return;
+      const removed = cart.splice(index, 1)[0];
+      updateCart();
+      spawnBubble(removeButton.getBoundingClientRect().left, removeButton.getBoundingClientRect().top, 'REMOVED!');
+      showCartStatusBubble(`${removed.name} removed. Cart now has ${cart.length} item${cart.length === 1 ? '' : 's'}.`);
+      if (navigator.vibrate) navigator.vibrate([20, 16, 20]);
+    });
 
     function buildOrderMessage() {
       const name = document.getElementById('customerName').value.trim() || 'Not provided';
