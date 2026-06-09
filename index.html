@@ -263,7 +263,7 @@
       margin: 0 auto 60px;
       padding: 0 18px;
       display: grid;
-      grid-template-columns: repeat(2, 1fr);
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
       gap: 18px;
     }
 
@@ -635,6 +635,142 @@
       border: 4px solid var(--ink);
     }
 
+
+    /* Retro game micro-interactions */
+    .btn, .cart-toggle, .add, .close, .checkout, .wheres-card, .scanner-float {
+      position: relative;
+      overflow: hidden;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .btn:active, .cart-toggle:active, .add:active, .close:active, .checkout:active, .wheres-card:active {
+      animation: gameShake .22s steps(2, end);
+    }
+
+    .card:hover, .feature:hover, .collection-card:hover, .scanner-copy:hover, .wheres-copy:hover {
+      animation: tinyWobble .32s ease both;
+    }
+
+    .hero-badge, .preview-label, .eyebrow {
+      animation: pixelBlink 2.6s infinite steps(2, end);
+    }
+
+    .coin-burst {
+      position: fixed;
+      z-index: 999;
+      pointer-events: none;
+      background: var(--gold);
+      color: var(--ink);
+      border: 3px solid var(--ink);
+      box-shadow: 3px 3px 0 var(--shadow);
+      padding: 7px 10px;
+      font-family: Arial, sans-serif;
+      font-size: .75rem;
+      font-weight: 1000;
+      text-transform: uppercase;
+      animation: popBubble .85s ease-out forwards;
+      white-space: nowrap;
+    }
+
+    .touch-ring {
+      position: fixed;
+      width: 26px;
+      height: 26px;
+      z-index: 998;
+      pointer-events: none;
+      border: 4px solid var(--gold);
+      box-shadow: 0 0 0 3px var(--ink);
+      transform: translate(-50%, -50%);
+      animation: touchRing .48s ease-out forwards;
+    }
+
+    .level-flash {
+      animation: levelFlash .32s ease both;
+    }
+
+    @keyframes gameShake {
+      0%,100% { transform: translate(0,0) rotate(0); }
+      25% { transform: translate(-3px, 1px) rotate(-1deg); }
+      50% { transform: translate(3px, -1px) rotate(1deg); }
+      75% { transform: translate(-2px, 2px) rotate(-1deg); }
+    }
+
+    @keyframes tinyWobble {
+      0%,100% { transform: translateY(0); }
+      35% { transform: translateY(-5px) rotate(-.5deg); }
+      70% { transform: translateY(-2px) rotate(.5deg); }
+    }
+
+    @keyframes pixelBlink {
+      0%, 92%, 100% { filter: brightness(1); }
+      94%, 98% { filter: brightness(1.45); }
+    }
+
+    @keyframes popBubble {
+      0% { transform: translate(-50%, 10px) scale(.7); opacity: 0; }
+      18% { opacity: 1; }
+      100% { transform: translate(-50%, -58px) scale(1); opacity: 0; }
+    }
+
+    @keyframes touchRing {
+      0% { opacity: .95; transform: translate(-50%, -50%) scale(.4); }
+      100% { opacity: 0; transform: translate(-50%, -50%) scale(2.5); }
+    }
+
+    @keyframes levelFlash {
+      0% { filter: brightness(1); transform: scale(1); }
+      45% { filter: brightness(1.3); transform: scale(.985); }
+      100% { filter: brightness(1); transform: scale(1); }
+    }
+
+    .lightbox-tools {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: flex-end;
+    }
+
+    .lightbox-tools button {
+      background: var(--gold);
+      color: var(--ink);
+      border: 4px solid var(--ink);
+      box-shadow: 3px 3px 0 var(--ink);
+      padding: 7px 10px;
+      font-weight: 1000;
+      text-transform: uppercase;
+    }
+
+    .lightbox-stage {
+      max-height: 82vh;
+      overflow: auto;
+      background: #111;
+      border: 4px solid var(--ink);
+      touch-action: pan-x pan-y;
+    }
+
+    .lightbox-stage img {
+      display: block;
+      width: 100%;
+      max-width: none;
+      max-height: none;
+      object-fit: contain;
+      background: #111;
+      border: 0;
+      transform-origin: top left;
+    }
+
+    .search-hint {
+      background: #fff7ce;
+      border: 3px solid var(--ink);
+      padding: 6px 9px;
+      font-size: .78rem;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation-duration: .001ms !important; animation-iteration-count: 1 !important; scroll-behavior: auto !important; }
+    }
+
     .feature-band {
       max-width: 1180px;
       margin: 0 auto 60px;
@@ -998,6 +1134,23 @@
       .wheres-preview img { min-height: 420px; }
       .wheres-gallery { grid-template-columns: 1fr; }
     }
+
+
+    .image-lightbox .lightbox-stage img {
+      width: 100%;
+      max-height: none;
+      object-fit: contain;
+      background: #111;
+      border: 0;
+    }
+
+    @media (max-width: 620px) {
+      .lightbox-inner { width: 98vw; max-height: 96vh; }
+      .lightbox-stage { max-height: 76vh; }
+      .lightbox-head { align-items: flex-start; flex-direction: column; }
+      .lightbox-tools { justify-content: flex-start; }
+    }
+
   </style>
 </head>
 <body>
@@ -1051,13 +1204,6 @@
         <div class="product-img"><img src="odotnyctote.png" alt="OdotNYC Tote Bag" /></div>
         <h3>OdotNYC Tote Bag</h3><p>The durable OdotNYC tote bag featuring the signature artwork, built for daily city carry thorughout New York City.</p>
         <div class="price-row"><span class="price">$30 Each</span><button class="add">Add</button></div>
-      </article>
-
-      <article class="card pixel-border" data-name="OdotNYC Game Cartridge" data-price="0">
-        <div class="product-img"><img src="odotnyc-game-cartridge.png" alt="OdotNYC Game Cartridge" /></div>
-        <h3>OdotNYC Game Cartridge</h3>
-        <p>Limited collector edition OdotNYC retro game cartridge. Story, features, unlockables, and future updates will be revealed through upcoming blog posts.</p>
-        <div class="price-row"><span class="price">Coming Soon</span><button class="add">Notify Me</button></div>
       </article>
 
       <article class="card pixel-border" data-name="OdotNYC Bean Mug" data-price="25">
@@ -1138,7 +1284,7 @@
     </section>
 
     <section class="collection-strip" aria-label="Where's OdotNYC collection features">
-      <div class="collection-card pixel-border"><strong>10 Levels</strong>Build the collection with each image getting harder to solve.</div>
+      <div class="collection-card pixel-border"><strong>9 Levels</strong>Build the collection with each image getting harder to solve.</div>
       <div class="collection-card pixel-border"><strong>Locations</strong>Feature Queens, Yonkers, Staten Island, Bronx, Brooklyn, SoHo, Coffee House, Knicks Game, Harlem, and more.</div>
       <div class="collection-card pixel-border"><strong>Challenges</strong>Invite visitors to screenshot, circle the head, and tag @OdotNYCTV.</div>
       <div class="collection-card pixel-border"><strong>Collectible</strong>Connect each level to stickers, QR scans, merch, and unlockable media.</div>
@@ -1164,10 +1310,20 @@
   <div class="image-lightbox" id="wheresLightbox" aria-hidden="true">
     <div class="lightbox-inner" role="dialog" aria-modal="true" aria-labelledby="lightboxTitle">
       <div class="lightbox-head">
-        <span id="lightboxTitle">Level 01 • Queens</span>
-        <button id="closeWheresLightbox" type="button">Close ×</button>
+        <div>
+          <span id="lightboxTitle">Level 01 • Queens</span>
+          <div class="search-hint">Pinch, scroll, or use zoom to search the full poster.</div>
+        </div>
+        <div class="lightbox-tools">
+          <button id="zoomOutWheres" type="button">−</button>
+          <button id="resetZoomWheres" type="button">Reset</button>
+          <button id="zoomInWheres" type="button">+</button>
+          <button id="closeWheresLightbox" type="button">Close ×</button>
+        </div>
       </div>
-      <img id="lightboxImg" src="wheres-odot-queens.png" alt="Expanded Where's Odot poster" />
+      <div class="lightbox-stage" id="lightboxStage">
+        <img id="lightboxImg" src="wheres-odot-queens.png" alt="Expanded Where's Odot poster" />
+      </div>
     </div>
   </div>
 
@@ -1228,8 +1384,43 @@
     const lightboxTitle = document.getElementById('lightboxTitle');
     const closeWheresLightbox = document.getElementById('closeWheresLightbox');
     const openCurrentWheres = document.getElementById('openCurrentWheres');
+    const lightboxStage = document.getElementById('lightboxStage');
+    const zoomInWheres = document.getElementById('zoomInWheres');
+    const zoomOutWheres = document.getElementById('zoomOutWheres');
+    const resetZoomWheres = document.getElementById('resetZoomWheres');
+    let wheresZoom = 1;
 
     document.getElementById('year').textContent = new Date().getFullYear();
+
+    const bubbleMessages = ['1UP!', 'POW!', 'TAP!', 'SEARCH!', 'LEVEL UP!', 'NYC MODE!', 'BOOM!'];
+
+    function spawnBubble(x, y, text) {
+      const bubble = document.createElement('div');
+      bubble.className = 'coin-burst';
+      bubble.textContent = text || bubbleMessages[Math.floor(Math.random() * bubbleMessages.length)];
+      bubble.style.left = `${x}px`;
+      bubble.style.top = `${y}px`;
+      document.body.appendChild(bubble);
+      setTimeout(() => bubble.remove(), 900);
+    }
+
+    function spawnTouchRing(x, y) {
+      const ring = document.createElement('span');
+      ring.className = 'touch-ring';
+      ring.style.left = `${x}px`;
+      ring.style.top = `${y}px`;
+      document.body.appendChild(ring);
+      setTimeout(() => ring.remove(), 520);
+    }
+
+    document.addEventListener('pointerdown', event => {
+      const interactive = event.target.closest('a, button, .wheres-preview, .card');
+      if (!interactive) return;
+      spawnTouchRing(event.clientX, event.clientY);
+      if (!event.target.closest('.image-lightbox')) spawnBubble(event.clientX, event.clientY);
+      if (navigator.vibrate) navigator.vibrate(18);
+    });
+
 
     function setWheresLevel(card) {
       const src = card.dataset.src;
@@ -1243,6 +1434,10 @@
       lightboxTitle.textContent = title;
       wheresCards.forEach(item => item.classList.remove('active'));
       card.classList.add('active');
+      wheresPreview.classList.remove('level-flash');
+      void wheresPreview.offsetWidth;
+      wheresPreview.classList.add('level-flash');
+      spawnBubble(window.innerWidth / 2, window.innerHeight * .22, 'LEVEL READY!');
     }
 
     wheresCards.forEach(card => {
@@ -1253,13 +1448,25 @@
       lightboxImg.src = wheresPreviewImg.src;
       lightboxImg.alt = wheresPreviewImg.alt;
       lightboxTitle.textContent = wheresPreviewLabel.textContent;
+      wheresZoom = 1;
+      applyWheresZoom();
       wheresLightbox.classList.add('open');
       wheresLightbox.setAttribute('aria-hidden', 'false');
+      setTimeout(() => { lightboxStage.scrollTo({ top: 0, left: 0 }); }, 0);
     }
 
     function closeLightbox() {
       wheresLightbox.classList.remove('open');
       wheresLightbox.setAttribute('aria-hidden', 'true');
+    }
+
+    function applyWheresZoom() {
+      lightboxImg.style.width = `${wheresZoom * 100}%`;
+    }
+
+    function setWheresZoom(value) {
+      wheresZoom = Math.min(2.8, Math.max(1, value));
+      applyWheresZoom();
     }
 
     wheresPreview.addEventListener('click', openWheresLightbox);
@@ -1271,6 +1478,9 @@
     });
     openCurrentWheres.addEventListener('click', openWheresLightbox);
     closeWheresLightbox.addEventListener('click', closeLightbox);
+    zoomInWheres.addEventListener('click', () => setWheresZoom(wheresZoom + .25));
+    zoomOutWheres.addEventListener('click', () => setWheresZoom(wheresZoom - .25));
+    resetZoomWheres.addEventListener('click', () => setWheresZoom(1));
     wheresLightbox.addEventListener('click', event => {
       if (event.target === wheresLightbox) closeLightbox();
     });
